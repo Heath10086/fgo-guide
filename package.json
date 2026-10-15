@@ -1,0 +1,12 @@
+{
+  "name": "fgo-guide",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "start": "npx --yes vercel@64.0.2 dev --listen 3000",
+    "dev": "npm start",
+    "test": "node --test"
+  }
+}

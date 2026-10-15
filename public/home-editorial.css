@@ -1,0 +1,75 @@
+/* VoiceBox, adapted for Chaldea.
+ * Retain the existing palette and Arial/Japanese font stacks in style.css.
+ * This sheet is loaded ONLY by index.html. Character cards, daily-card contents,
+ * profile styles and the rounded floating navigation are deliberately untouched.
+ * Scope controls to their exact section: never use a global button/h2 override.
+ */
+/* Editorial masthead: weight, rules and typography instead of decoration. */
+.home-page .home-header { border-bottom:2px solid var(--text); }
+.home-page .home-header .brand { font-weight:800; }
+.home-page .header-slogan { font-weight:700; }
+.home-page .home-header .edition { font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:.1em; }
+.home-page .home-header .help-button { border:2px solid var(--line); border-radius:0; font-size:12px; min-height:40px; }
+.home-page .home-header .help-button:hover { border-color:var(--accent); color:var(--accent); filter:none; }
+.home-page .hero { padding-block:32px; max-width:780px; }
+.home-page .hero h1 { font-size:clamp(36px,5vw,56px); line-height:1.05; font-weight:800; letter-spacing:-.03em; margin:0 0 16px; }
+.home-page .hero .intro { max-width:590px; line-height:1.7; }
+.home-page .editorial-overline { margin:0 0 16px; color:var(--muted); font-size:11px; line-height:1.4; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.home-page .editorial-overline span { margin-inline:8px; color:var(--accent); }
+
+/* The search tools are a flat editorial band, not another character card. */
+.home-page .search-panel { padding:24px 0; background:transparent; border:0; border-top:2px solid var(--text); border-bottom:1px solid var(--line); border-radius:0; }
+.home-page .editorial-section-label { display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px 24px; margin-bottom:24px; font-size:11px; line-height:1.4; font-weight:700; letter-spacing:.12em; text-transform:uppercase; }
+.home-page .editorial-section-label > :first-child { color:var(--accent); }
+.home-page .editorial-hint { color:var(--muted); }
+.home-page .search-panel label { font-size:12px; line-height:1.5; font-weight:700; letter-spacing:.06em; text-transform:uppercase; }
+.home-page .search-row { gap:8px; }
+.home-page .search-panel input,
+.home-page .search-panel select,
+.home-page .search-panel .select-trigger { min-height:48px; padding:10px 14px; border-width:2px; border-radius:0; background:var(--bg); }
+.home-page .search-panel input:focus,
+.home-page .search-panel .select-trigger[aria-expanded="true"] { border-color:var(--accent); }
+.home-page #search-button,
+.home-page #reset { min-height:48px; padding:10px 24px; border-width:2px; border-radius:0; font-size:14px; letter-spacing:.06em; text-transform:uppercase; }
+.home-page #search-button { background:var(--text); border-color:var(--text); color:var(--bg); }
+.home-page #search-button:hover:not(:disabled) { background:var(--accent); border-color:var(--accent); filter:none; }
+.home-page #reset:hover { border-color:var(--text); background:var(--text); color:var(--bg); filter:none; }
+.home-page .search-panel button:disabled { cursor:not-allowed; filter:none; }
+.home-page .filters { margin-top:24px; gap:16px; }
+.home-page #search-help { margin:8px 0 0; font-size:12px; }
+.home-page #suggestions,
+.home-page .search-panel .select-options { border:2px solid var(--line); border-radius:0; box-shadow:none; }
+.home-page #suggestions .suggestion,
+.home-page .search-panel .select-options [role="option"] { border-radius:0; }
+.home-page #suggestions .suggestion + .suggestion,
+.home-page .search-panel .select-options [role="option"] + [role="option"] { border-top:1px solid var(--line); }
+
+/* Compact discovery strip. Do not select .daily-card or its descendants. */
+.home-page .daily-section { margin-top:16px; border-radius:0; background:transparent; }
+.home-page .daily-bar { padding:12px 16px; }
+.home-page .daily-badge { border:0; border-radius:0; border-right:1px solid var(--line); width:40px; font-weight:700; }
+.home-page .daily-bar h2 { font-size:18px; letter-spacing:-.01em; }
+.home-page #daily-toggle { border-radius:0; border-color:transparent; }
+.home-page #daily-toggle:hover { border-color:var(--accent); filter:none; }
+
+/* The archive introduction changes; the grid and all cards below do not. */
+.home-page #archive { margin-top:32px; margin-bottom:24px; padding-top:24px; border-top:2px solid var(--text); align-items:end; }
+.home-page #archive .editorial-overline { margin-bottom:8px; }
+.home-page #archive h2 { font-size:32px; font-weight:800; line-height:1.1; letter-spacing:-.02em; margin:0; }
+.home-page #archive #status { margin:0; font-size:12px; }
+.home-page #load-more,
+.home-page #retry { border-width:2px; border-radius:0; font-size:14px; min-height:44px; }
+.home-page #load-more:hover,
+.home-page #retry:hover { border-color:var(--accent); color:var(--accent); filter:none; }
+.home-page > main > .note { border-left-width:4px; background:transparent; padding:16px 24px; }
+.home-page > footer { border-top-width:2px; padding-block:24px; }
+
+@media(max-width:700px) {
+  .home-page .editorial-overline { letter-spacing:.08em; }
+}
+@media(max-width:480px) {
+  .home-page .editorial-hint { display:none; }
+  .home-page #search-button,.home-page #reset { padding-inline:12px; font-size:12px; }
+  .home-page #archive #status { margin-top:12px; }
+  .home-page #archive h2 { font-size:28px; }
+}

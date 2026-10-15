@@ -1,0 +1,11 @@
+{
+  "liveServer.settings.root": "/public",
+  "liveServer.settings.proxy": {
+    "enable": true,
+    "baseUri": "/api",
+    "proxyUri": "http://127.0.0.1:3000/api"
+  },
+  "liveServer.settings.ignoreFiles": [
+    ".vscode/**", "node_modules/**", ".git/**", ".vercel/**", ".env*"
+  ]
+}

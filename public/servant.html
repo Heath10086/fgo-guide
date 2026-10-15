@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Character profile · Chaldea Field Guide</title>
+  <link rel="stylesheet" href="./style.css">
+  <script type="module" src="./js/servant.js"></script>
+  <script type="module" src="./js/onboarding.js"></script>
+  <script type="module" src="./js/navigation.js"></script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="header wrap"><a class="brand" href="./index.html">✦ CHALDEA <span>FIELD GUIDE</span></a><span class="edition">NA · ENGLISH</span></header>
+  <main id="main" class="wrap">
+    <a class="back" href="./index.html">← Back to character archive</a>
+    <p id="status" role="status">Loading character profile…</p>
+    <button id="retry" class="secondary" hidden>Retry loading</button>
+    <div id="profile" hidden>
+      <section id="overview" class="overview"></section>
+      <nav class="section-nav" aria-label="Profile sections"><a href="#overview">Overview</a><a href="#skills">Skills</a><a href="#noble-phantasm">Noble Phantasm</a></nav>
+      <section id="skills" class="detail-section"><p class="eyebrow">EXPLORE THEIR ABILITIES</p><h2>Skills & Noble Phantasm</h2><p class="muted">A Noble Phantasm is a character’s special ability. Multiple entries for the same skill slot or Noble Phantasm are alternate versions, not extra equipped abilities. Unlock conditions vary.</p><div id="skill-content"></div><h3 id="noble-phantasm">Noble Phantasm</h3><div id="np-content"></div></section>
+    </div>
+  </main>
+  <footer class="wrap">Unofficial classroom project · Game data: <a href="https://api.atlasacademy.io/docs">Atlas Academy</a> · Character artwork belongs to its respective rights holders.</footer>
+</body>
+</html>

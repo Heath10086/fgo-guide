@@ -1,0 +1,15 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "",
+  "devCommand": "",
+  "outputDirectory": "public",
+  "functions": {
+    "api/atlas.js": { "maxDuration": 30 }
+  },
+  "rewrites": [
+    { "source": "/api/servants", "destination": "/api/atlas?resource=servants" },
+    { "source": "/api/servant", "destination": "/api/atlas?resource=servant" },
+    { "source": "/api/japanese-names", "destination": "/api/atlas?resource=japanese-names" }
+  ]
+}
