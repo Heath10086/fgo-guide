@@ -54,6 +54,7 @@ async function init() {
     setupDaily(servants);
   } catch (error) {
     $("#status").textContent = error.code === 'LOCAL_API_MISSING' ? error.message : "Could not load the character list. Check your connection, then retry.";
+    $("#daily-picks").textContent = 'Daily picks could not load. Close this window and use “Retry loading” in the character list.';
     $("#retry").hidden = false; console.error(error);
   }
 }

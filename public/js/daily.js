@@ -143,24 +143,97 @@ export function chooseDaily(servants, day) {
     || a.collectionNo - b.collectionNo).slice(0,3);
 }
 
-// Keep the optional discovery section closed on every page load. A real button
-// provides Enter/Space support; hidden also removes collapsed links from Tab order.
+// The native dialog provides focus containment; a curved reveal uncovers a full view.
 export function setupDailyDisclosure() {
-  const trigger = document.querySelector('#daily-toggle');
+  const dialog = document.querySelector('#daily-dialog');
   const content = document.querySelector('#daily-content');
-  const label = document.querySelector('#daily-toggle-label');
-  function setOpen(open) {
-    content.hidden = !open;
-    trigger.setAttribute('aria-expanded', String(open));
-    label.textContent = open ? "Hide today's picks" : "Show today's 3 picks";
-    if (open) content.dispatchEvent(new Event('daily:open'));
+  const closeButton = document.querySelector('#daily-close');
+  const tourHint = document.querySelector('#daily-tour-hint');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let trigger, animations = [], phase = 'closed', scrollPosition;
+  let guided = false, advanceTour = false;
+  const setPhase = value => { phase = value; dialog.dataset.phase = value; };
+  function clearAnimations() {
+    animations.forEach(animation => animation.cancel());
+    animations = [];
   }
-  setOpen(false);
-  trigger.addEventListener('click', () => setOpen(content.hidden));
-  document.querySelector('#daily-close').addEventListener('click', () => {
-    setOpen(false);
-    trigger.focus({ preventScroll: true });
-    trigger.scrollIntoView({ block: 'nearest' });
+  function close() {
+    if (!dialog.open || phase === 'closing') return;
+    setPhase('closing');
+    if (motion.matches || !animations.length) { dialog.close(); return; }
+    // Reverse the actual progress, including a close during the opening motion.
+    animations.forEach(animation => animation.reverse());
+    Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
+      if (phase === 'closing') dialog.close();
+    });
+  }
+  content.hidden = true;
+  function open(button, fromTour = false) {
+    if (!button || dialog.open) return;
+    trigger = button;
+    guided = fromTour;
+    advanceTour = false;
+    tourHint.hidden = !guided;
+    closeButton.textContent = guided ? 'Back to introduction ↑' : 'Back to browsing ↑';
+    closeButton.setAttribute('aria-label', guided ? 'Return to the Discover introduction step' : 'Close daily picks and return to browsing');
+    scrollPosition = {left:window.scrollX, top:window.scrollY};
+    content.hidden = false;
+    setPhase('opening');
+    dialog.showModal();
+    dialog.scrollTop = 0;
+    document.body.classList.add('daily-modal-open');
+    trigger.setAttribute('aria-expanded', 'true');
+    content.dispatchEvent(new Event('daily:open'));
+    if (motion.matches || typeof dialog.animate !== 'function') { setPhase('open'); return; }
+    const timing = {duration:620, easing:'cubic-bezier(.22,.68,.16,1)', fill:'both'};
+    const page = document.querySelectorAll('.home-header, .navigation-dock, #main, body > footer');
+    animations = [
+      dialog.animate([
+        {clipPath:'inset(0 0 100% 0 round 0 0 50% 50%)'},
+        {clipPath:'inset(0 0 0% 0 round 0 0 0% 0%)'}
+      ], timing),
+      ...[...page].map(node => node.animate([
+        {transform:'translateY(0)'},
+        {transform:`translateY(${window.innerHeight}px)`}
+      ], timing))
+    ];
+    Promise.allSettled(animations.map(animation => animation.finished)).then(() => {
+      if (phase === 'opening') setPhase('open');
+    });
+  }
+  // The header button is created by navigation.js after this module initializes.
+  document.addEventListener('click', event => {
+    const button = event.target.closest('.daily-tag');
+    if (button) open(button);
+  });
+  document.addEventListener('daily:tour-preview', () => open(document.querySelector('.daily-tag'), true));
+  document.querySelector('#daily-tour-continue').addEventListener('click', () => {
+    if (!guided || phase === 'closing') return;
+    advanceTour = true;
+    close();
+  });
+  closeButton.addEventListener('click', close);
+  dialog.addEventListener('cancel', event => { event.preventDefault(); close(); });
+  dialog.addEventListener('close', () => {
+    setPhase('closed');
+    clearAnimations();
+    content.hidden = true;
+    document.body.classList.remove('daily-modal-open');
+    trigger?.setAttribute('aria-expanded', 'false');
+    if (scrollPosition) window.scrollTo({...scrollPosition, behavior:'instant'});
+    if (guided) {
+      guided = false;
+      tourHint.hidden = true;
+      document.dispatchEvent(new CustomEvent('daily:tour-return', {detail:{advance:advanceTour}}));
+      return;
+    }
+    trigger?.focus({ preventScroll: true });
+    // Wait for the top layer and animated transforms to finish their browser cleanup.
+    requestAnimationFrame(() => {
+      if (phase !== 'closed' || document.querySelector('dialog[open]')) return;
+      if (scrollPosition) window.scrollTo({...scrollPosition, behavior:'instant'});
+      trigger?.focus({ preventScroll: true });
+    });
   });
 }
 

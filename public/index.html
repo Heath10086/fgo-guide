@@ -13,15 +13,15 @@
 <body class="home-page">
   <a class="skip" href="#main">Skip to content</a>
   <header class="header home-header wrap">
-    <a class="brand" href="./index.html">✦ CHALDEA <span>FIELD GUIDE</span></a>
-    <p class="header-slogan">welcome to chaldea</p>
+    <a class="brand" href="./index.html"><img class="brand-logo" src="./assets/chaldea-logo.webp" alt="" width="48" height="48"><span class="brand-name">CHALDEA FIELD GUIDE</span></a>
     <span class="edition">NA · English</span>
   </header>
   <main id="main" class="wrap">
     <section id="top" class="hero" tabindex="-1">
-      <p class="editorial-overline">Fate/Grand Order <span aria-hidden="true">/</span> The character reference</p>
-      <h1>Chaldea Field Guide</h1>
-      <p class="intro">A guide to the characters and abilities of Fate/Grand Order. Search a name or browse the archive to get started.</p>
+      <p class="hero-welcome">welcome to</p>
+      <h1>CHALDEA</h1>
+      <p class="intro">Explore Servants, skills and Noble Phantasms.</p>
+      <p class="hero-context">Your character reference for Fate/Grand Order.</p>
     </section>
     <section id="find" class="search-panel" aria-label="Find a character" tabindex="-1">
       <div class="editorial-section-label"><span>01 / Find a Servant</span><span class="editorial-hint">Search · Filter · Explore</span></div>
@@ -29,10 +29,10 @@
         <label for="search-input">Search by character name</label>
         <div class="search-row">
           <div id="autocomplete" class="autocomplete">
-            <input id="search-input" type="search" placeholder="Try Artoria, Mash, or a single letter…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions" aria-describedby="search-help" disabled>
+            <input id="search-input" type="search" placeholder="Search a Servant…" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions" aria-describedby="search-help" disabled>
             <ul id="suggestions" role="listbox" aria-label="Matching characters" hidden></ul>
           </div>
-          <button id="search-button" type="submit" disabled>Search <span aria-hidden="true">↗</span></button>
+          <button id="search-button" type="submit" aria-label="Search characters" disabled><span class="sr-only">Search</span><span aria-hidden="true">→</span></button>
         </div>
         <p id="search-help" class="muted small">Type to see suggestions. Use ↑ ↓ and Enter to select, or Search to see all matches.</p>
         <span id="suggestion-status" class="sr-only" role="status"></span>
@@ -43,25 +43,28 @@
         <button id="reset" class="secondary" type="button">Clear filters</button>
       </div>
     </section>
-    <section id="discover" class="daily-section" aria-labelledby="daily-heading" tabindex="-1">
-      <div class="daily-bar">
-        <div class="daily-bar-title"><span class="daily-badge" aria-hidden="true">03</span><h2 id="daily-heading">Today's discoveries</h2></div>
-        <button id="daily-toggle" class="secondary" type="button" aria-expanded="false" aria-controls="daily-content"><span id="daily-toggle-label">Show today's 3 picks</span><span class="daily-chevron" aria-hidden="true"></span></button>
-      </div>
-      <div id="daily-content" hidden>
-        <p id="daily-date" class="small muted"></p>
-        <p class="muted daily-intro">Three characters worth a closer look. Discovery picks, not a recommended team.</p>
-        <div id="daily-picks" class="daily-grid"><p class="muted">Recommendations appear when the character list loads.</p></div>
-        <p class="small muted daily-footnote">ATK = attack · HP = health. Natural maximum stats, without Grails or Fou bonuses. Higher stats do not always mean a stronger character.</p>
-        <button id="daily-close" class="secondary" type="button">Hide discoveries ↑</button>
-      </div>
-    </section>
     <div id="archive" class="section-heading" tabindex="-1"><div><p class="editorial-overline">02 / Browse the collection</p><h2>Character archive</h2></div><p id="status" role="status">Loading character list…</p></div>
     <button id="retry" class="secondary" hidden>Retry loading</button>
     <div id="results" class="card-grid"></div>
     <button id="load-more" class="secondary load-more" hidden>Show more characters</button>
     <aside class="note"><strong>New to FGO?</strong> Servants are playable characters. Class describes a character category; rarity is a star rating, not a guarantee of strength. Open a profile to explore skills and the Noble Phantasm—the character’s special ability.</aside>
   </main>
+  <dialog id="daily-dialog" class="daily-dialog" aria-labelledby="daily-heading" aria-describedby="daily-description">
+    <div class="daily-dialog-header">
+      <h2 id="daily-heading">Today's discoveries</h2>
+      <button id="daily-close" class="secondary" type="button" aria-label="Close daily picks and return to browsing" autofocus>Back to browsing ↑</button>
+    </div>
+    <div id="daily-content" hidden>
+      <aside id="daily-tour-hint" class="daily-tour-hint" aria-label="Try the daily discoveries" hidden>
+        <p><strong>Your first discovery</strong><br>Choose a character and expand “Skills &amp; Noble Phantasm” below. When you are ready, continue to learn how to search.</p>
+        <button id="daily-tour-continue" type="button">Continue introduction →</button>
+      </aside>
+      <p id="daily-date" class="small muted"></p>
+      <p id="daily-description" class="muted daily-intro">Not sure who to search for? Meet three characters, explore their abilities, and open a profile to learn more. Discovery picks, not a recommended team.</p>
+      <div id="daily-picks" class="daily-grid"><p class="muted" role="status">Loading the character list…</p></div>
+      <p class="small muted daily-footnote">ATK = attack · HP = health. Natural maximum stats, without Grails or Fou bonuses. Higher stats do not always mean a stronger character.</p>
+    </div>
+  </dialog>
   <footer class="wrap">Unofficial classroom project · Game data: <a href="https://api.atlasacademy.io/docs">Atlas Academy</a> · Character artwork belongs to its respective rights holders.</footer>
 </body>
 </html>
